@@ -10,10 +10,11 @@ terraform {
 
 resource "digitalocean_droplet" "vm-lab" {
   image    = "ubuntu-22-04-x64"
-  name     = var.droplet_name
+  name     = "${var.droplet_name}- ${count.index}"
   region   = var.droplet_region
   size     = var.droplet_size
   ssh_keys = [data.digitalocean_ssh_key.ssh_key.id]
+  count = var.vms_count
 }
 
 resource "digitalocean_firewall" "firewall_ocean" {
